@@ -44,25 +44,33 @@ public class CardTest {
 
     @Test
     void shouldCardTest() {
+        
+        $("[data-test-id='name'] input").setValue("Афанасов Антон");
+        $(byText("Продолжить")).click();
 
-        Configuration.holdBrowserOpen = true;
-        open("http://localhost:9999");
+        String actualText = $("[data-test-id='order-success']").getText().trim();
+        String expectedText = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
 
-        String meetingDateNearest = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        Assertions.assertEquals(expectedText, actualText);
 
-        $("[data-test-id='city'] input").setValue("Иркутск");
-        $("[data-test-id='date'] input").setValue(meetingDateNearest);
+//        Configuration.holdBrowserOpen = true;
+//        open("http://localhost:9999");
+//
+//        String meetingDateNearest = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+//
+//        $("[data-test-id='city'] input").setValue("Иркутск");
+//        $("[data-test-id='date'] input").setValue(meetingDateNearest);
 
-        $("[data-test-id=name] input").setValue("Афанасов Антон");
-        $("[data-test-id=phone] input").setValue("+79000000880");
-        $("[data-test-id='agreement'] .checkbox__box").click();
-        $(byText("Забронировать")).click();
-        $("[data-test-id='notification'] .notification__title")
-                .shouldBe(Condition.appear, Duration.ofSeconds(15))
-                .shouldHave((text("Успешно!")));
-        $("[data-test-id='notification'] .notification__content")
-                .shouldBe(Condition.visible)
-                .shouldHave(text("Встреча успешно забронирована на " + meetingDateNearest));
+//        $("[data-test-id=name] input").setValue("Афанасов Антон");
+//        $("[data-test-id=phone] input").setValue("+79000000880");
+//        $("[data-test-id='agreement'] .checkbox__box").click();
+//        $(byText("Забронировать")).click();
+//        $("[data-test-id='notification'] .notification__title")
+//                .shouldBe(Condition.appear, Duration.ofSeconds(15))
+//                .shouldHave((text("Успешно!")));
+//        $("[data-test-id='notification'] .notification__content")
+//                .shouldBe(Condition.visible)
+//                .shouldHave(text("Встреча успешно забронирована на " + meetingDateNearest));
 
     }
 }
