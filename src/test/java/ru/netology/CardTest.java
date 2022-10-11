@@ -61,6 +61,20 @@ public class CardTest {
     }
 
     @Test
+    void shouldCardTestEmptyName() {
+
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79994008600");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button")).click();
+
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
+        String expectedText = "Поле обязательно для заполнения";
+
+        Assertions.assertEquals(expectedText, actualText);
+    }
+
+    @Test
     void shouldCardTestPhone() {
 
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Афанасов Антон");
@@ -74,17 +88,30 @@ public class CardTest {
         Assertions.assertEquals(expectedText, actualText);
     }
 
-//    @Test
-//    void shouldCardTestAgree() {
-//
-//        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Афанасов Антон");
-//        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79994008600");
-//        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
-//        driver.findElement(By.cssSelector("button")).click();
-//
-//        String actualText = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
-//        String expectedText = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
-//
-//        Assertions.assertEquals(expectedText, actualText);
-//    }
+    @Test
+    void shouldCardTestEmptyPhone() {
+
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Афанасов Антон");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button")).click();
+
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
+        String expectedText = "Поле обязательно для заполнения";
+
+        Assertions.assertEquals(expectedText, actualText);
+    }
+
+    @Test
+    void shouldCardTestAgree() {
+
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Афанасов Антон");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79994008600");
+        driver.findElement(By.cssSelector("button")).click();
+
+        String actualText = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
+        String expectedText = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
+
+        Assertions.assertEquals(expectedText, actualText);
+    }
 }
